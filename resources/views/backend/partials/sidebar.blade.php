@@ -19,6 +19,16 @@
                     Orders
                 </a>
             </li>
+
+            @if(auth()->user())
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('admin.profile')}}">
+                    <span data-feather="user"></span>
+                    Profile
+                </a>
+            </li>
+            @endif
+
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <span data-feather="shopping-cart"></span>

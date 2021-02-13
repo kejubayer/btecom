@@ -23,6 +23,12 @@ Route::get('/admin',[\App\Http\Controllers\Backend\DashboardController::class,'i
 //admin users
 Route::get('/admin/users',[\App\Http\Controllers\Backend\UserController::class,'index'])->name('admin.user');
 
+//admin Profile
+Route::get('admin/profile',[\App\Http\Controllers\Backend\UserController::class,'profile'])->name('admin.profile');
+Route::post('admin/profile',[\App\Http\Controllers\Backend\UserController::class,'editProfile']);
+Route::get('admin/logout',[\App\Http\Controllers\Backend\UserController::class,'logout'])->name('admin.logout');
+
 //admin login
 Route::get('/admin/login',[\App\Http\Controllers\Backend\LoginController::class,'index'])->name('admin.login');
 Route::post('/admin/login',[\App\Http\Controllers\Backend\LoginController::class,'submitLogin']);
+
