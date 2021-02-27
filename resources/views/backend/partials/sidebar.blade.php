@@ -30,7 +30,7 @@
             @endif
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('admin.product')}}">
                     <span data-feather="shopping-cart"></span>
                     Products
                 </a>
