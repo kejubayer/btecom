@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
 Route::get('/contact', [App\Http\Controllers\Frontend\HomeController::class, 'contact'])->name('contact');
-Route::get('/products/show', [App\Http\Controllers\Frontend\ProductController::class, 'show'])->name('product.show');
+Route::get('/products/show/{id}', [App\Http\Controllers\Frontend\ProductController::class, 'show'])->name('product.show');
 
 Route::get('/login',[\App\Http\Controllers\Frontend\UserController::class,'login'])->name('login');
 
@@ -23,10 +23,16 @@ Route::get('/login',[\App\Http\Controllers\Frontend\UserController::class,'login
 Route::get('/admin/login', [\App\Http\Controllers\Backend\LoginController::class, 'index'])->name('admin.login');
 Route::post('/admin/login', [\App\Http\Controllers\Backend\LoginController::class, 'submitLogin']);
 
+Route::get('add/cart/{id}',[\App\Http\Controllers\Frontend\CartController::class,'store'])->name('add.cart');
+Route::get('checkout',[\App\Http\Controllers\Frontend\CartController::class,'checkout'])->name('checkout');
+
 
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/profile',[\App\Http\Controllers\Frontend\UserController::class,'index'])->name('profile');
+    Route::get('/user/logout',[\App\Http\Controllers\Frontend\UserController::class,'logout'])->name('user.logout');
+
+    Route::get('place-order',[\App\Http\Controllers\Frontend\OrderController::class,'placeOrder'])->name('place_order');
 
     Route::middleware(['check_admin'])->prefix('admin')->group(function () {
 

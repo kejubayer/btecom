@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 
 @section('title')
-Laptop
+{{$product->name}} -
 @endsection
 
 @section('main')
@@ -18,19 +18,8 @@ Laptop
             <div class="row">
                 <div class="col-lg-10 col-md-12 col-lg-offset-1">
                     <div class="ps-product__thumbnail">
-                        <div class="ps-product__preview">
-                            <div class="ps-product__variants">
-                                <div class="item"><img src="{{asset('images/shoe-detail/1.jpg')}}" alt=""></div>
-                                <div class="item"><img src="{{asset('images/shoe-detail/2.jpg')}}" alt=""></div>
-                                <div class="item"><img src="{{asset('images/shoe-detail/3.jpg')}}" alt=""></div>
-                                <div class="item"><img src="{{asset('images/shoe-detail/3.jpg')}}" alt=""></div>
-                                <div class="item"><img src="{{asset('images/shoe-detail/3.jpg')}}" alt=""></div>
-                            </div><a class="popup-youtube ps-product__video" href="http://www.youtube.com/watch?v=0O2aH4XLbto"><img src="{{asset('images/shoe-detail/1.jpg')}}" alt=""><i class="fa fa-play"></i></a>
-                        </div>
                         <div class="ps-product__image">
-                            <div class="item"><img class="zoom" src="{{asset('images/shoe-detail/1.jpg')}}" alt="" data-zoom-image="images/shoe-detail/1.jpg"></div>
-                            <div class="item"><img class="zoom" src="{{asset('images/shoe-detail/2.jpg')}}" alt="" data-zoom-image="images/shoe-detail/2.jpg"></div>
-                            <div class="item"><img class="zoom" src="{{asset('images/shoe-detail/3.jpg')}}" alt="" data-zoom-image="images/shoe-detail/3.jpg"></div>
+                            <div class="item"><img class="zoom" src="@if(!filter_var($product->photo, FILTER_VALIDATE_URL)){{asset('assets/uploads/'.$product->photo)}}@else{{$product->photo}}@endif" alt="" data-zoom-image="images/shoe-detail/1.jpg"></div>
                         </div>
                     </div>
                     <div class="ps-product__thumbnail--mobile">

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Validator;
 
 class ProductController extends Controller
 {
@@ -21,18 +23,35 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $photo = $request->file('photo');
-        $filename = time() . '_product.' . $photo->getClientOriginalExtension();
-        $request->photo->move('assets/uploads', $filename);
-        $product = Product::create([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'price' => $request->input('price'),
-            'photo' => $filename
-        ]);
+        try {
 
-        return redirect()->route('admin.product');
+            $rules = [
+                'name' => ['required'],
+                'price' => ['required','numeric'],
+                'description' => ['required'],
+                'photo' => ['required','max:1024'],
+            ];
+           $validate =  Validator::make($request->all(),$rules);
+           if ($validate->fails()){
+               return redirect()->back()->withErrors($validate)->withInput();
+           }
 
+
+            $photo = $request->file('photo');
+            $filename = time() . '_product.' . $photo->getClientOriginalExtension();
+            $request->photo->move('assets/uploads', $filename);
+            $product = Product::create([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'price' => $request->input('price'),
+                'photo' => $filename
+            ]);
+
+            return redirect()->route('admin.product');
+
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors($exception->getMessage());
+        }
 
     }
 
