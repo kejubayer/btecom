@@ -34,6 +34,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('place-order',[\App\Http\Controllers\Frontend\OrderController::class,'placeOrder'])->name('place_order');
 
+    Route::get('order/{id}',[\App\Http\Controllers\Frontend\OrderController::class,'show'])->name('user.order.show');
+
+    Route::post('order/submit',[\App\Http\Controllers\Frontend\OrderController::class,'submitOrder'])->name('submit.order');
+
     Route::middleware(['check_admin'])->prefix('admin')->group(function () {
 
         //admin Dashboard
@@ -54,6 +58,13 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/products/{id}/edit/',[\App\Http\Controllers\Backend\ProductController::class,'edit'])->name('admin.product.edit');
         Route::post('/products/{id}/edit/',[\App\Http\Controllers\Backend\ProductController::class,'update']);
+
+        //Admin order
+
+        Route::get('orders',[\App\Http\Controllers\Backend\OrderController::class,'index'])->name('admin.order');
+        Route::get('orders/{id}',[\App\Http\Controllers\Backend\OrderController::class,'show'])->name('admin.order.show');
+
+        Route::post('orders/{id}/status',[\App\Http\Controllers\Backend\OrderController::class,'changeStatus'])->name('admin.order.status');
 
     });
 });
